@@ -11,13 +11,15 @@ app.get('/macys/api/discover/v1/search', (req, res) => {
         url: url,
         headers: {
             'Accept': 'application/json',
-            'x-macys-webservice-client-id': '95345ypwu55hyvs6em3uv5mg'
+            'x-macys-webservice-client-id': 'psp_1.0_5825a8b937'
         }
     },
     function (error, response, body) {
         if(!error && response.statusCode === 200) {
+            console.log(response.request.headers);
             res.json(JSON.parse(body));
         } else {
+            console.log(error);
             res.json(error);
         }
     });

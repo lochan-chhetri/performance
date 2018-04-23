@@ -174,8 +174,14 @@ const populateTable = (totalImages, min, max, mean, p25, p50, p75, p95) => {
 
         const longest = (max) ? (max[0] > max[1] ? max[0] : max[1]) : 0;
 
-        console.log('akamai', akDataArr);
+        if(akDataArr.length) {
+            console.log('akamai', akDataArr);
+        }
+
+        if(zyDataArr.length) {
         console.log('zycada', zyDataArr);
+        }
+        
 
                 
         document.getElementById('total_images').children[1].innerHTML = totalImages ? totalImages[0] : '';
