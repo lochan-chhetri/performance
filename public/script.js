@@ -15,6 +15,21 @@ const uuidv4 = () => {
   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
 };
 
+const loadPhantomAsset = (uuid) => {
+    UUID = uuid;
+    let img = new Image();
+    zyUuid = uuid;
+    console.log('OnLoad Zy UUID is ', uuid);
+    var hash = 'zycadize';
+    
+    var ghost_url = zyImgPrefix + "/" + hash + "?X-Zy-UUID=" + uuid;
+    
+    var container = document.getElementById("bImage");
+
+    img.onload = function () { container.appendChild(img); };
+    img.src = ghost_url;
+};
+
 const requestXHR = vendor => {
     const keyword = document.getElementById('searchText').value;
     let url, imagePrefix, headers = new Headers();
@@ -25,7 +40,7 @@ const requestXHR = vendor => {
             imagePrefix = akImgPrefix;
             break;
         case 'zycada':
-            url = zyApiUrlPrefix + keyword + apiUrlSuffix;
+            url = zyApiUrlPrefix + keyword + apiUrlSuffix + '&X-Zy-UUID=' + UUID;
             imagePrefix = zyImgPrefix;
             headers.append('X-Zy-UUID', UUID);
         break;
@@ -285,7 +300,7 @@ const draw = () => {
 };
 
 window.onload = () => {
-    UUID = uuidv4();
+    loadPhantomAsset(uuidv4());
 };
 
 document.getElementById('searchForm').addEventListener('submit', evt => {
