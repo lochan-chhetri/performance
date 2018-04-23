@@ -11,7 +11,7 @@ app.get('/macys/api/discover/v1/search', (req, res) => {
         url: url,
         headers: {
             'Accept': 'application/json',
-            'x-macys-webservice-client-id': 'psp_1.0_5825a8b937'
+            'x-macys-customer-id': 'testclient_1.0_kweu3w323a'
         }
     },
     function (error, response, body) {
