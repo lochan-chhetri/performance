@@ -1,7 +1,8 @@
 const akImgPrefix = "https://slimages.macysassets.com";
 const zyImgPrefix   = "https://slimages-macysassets-com.zycadize.com";
 
-const akApiUrlPrefix  = "/macys/api/discover/v1/search?keyword=";
+// const akApiUrlPrefix  = "/macys/api/discover/v1/search?keyword=";
+const akApiUrlPrefix  = "https://m-macys-com.zycadize.com/api/discover/v1/search?keyword=";
 // const zyApiUrlPrefix  = "/macys/api/discover/v1/search?keyword=";
 let zyApiUrlPrefix  = "https://m-macys-com.zycadize.com/api/discover/v1/search?keyword=";
 
