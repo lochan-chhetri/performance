@@ -307,9 +307,9 @@ window.onload = () => {
 document.getElementById('searchForm').addEventListener('submit', evt => {
     evt.preventDefault();
 
-    if(document.getElementById('singleAPI').checked) {
-        zyApiUrlPrefix = akApiUrlPrefix;
-    }
+    // if(document.getElementById('singleAPI').checked) {
+    //     zyApiUrlPrefix = akApiUrlPrefix;
+    // }
     
     akDataArr = []; // to make sure array is empty
     zyDataArr = [];
