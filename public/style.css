@@ -1,0 +1,114 @@
+h1 {
+  text-align: center;
+  text-transform: uppercase;
+}
+#searchForm {
+  padding: 10px 0;
+  margin: 10px 5px;
+  text-align: center;
+}
+
+#searchText {
+  padding: 10px;
+  border: 1px solid #666;
+  font-size: 14px;
+  color: #333;
+  width: 200px;
+}
+
+#searchForm button {
+  padding: 10px;
+  background: #EEE;
+  font-weight: bold;
+  margin: 0 5px;
+  font-size: 14px;
+  width: 100px;
+}
+
+#image_container {
+    margin: 5px;
+    padding: 5px;   
+    display: flex; 
+    justify-content: center;
+}
+
+.imageContainer img {
+    margin: 5px;
+    width: 75px;
+}
+
+#akamai {
+    margin: 5px;
+    border: 4px solid #39937e;
+    display: inline-block;
+    width: 50vw;
+    vertical-align: top;
+    height: 335px;
+    overflow: auto;
+  }
+
+  #zycada {
+    margin: 5px;
+    border: 4px solid #d34554;
+    display: inline-block;
+    width: 50vw;
+    vertical-align: top;
+    height: 335px;
+    overflow: auto;
+  }
+
+
+  #button_container {
+    clear: both;
+    text-align: center;
+  }
+
+  #metrics {
+    width: 200px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #C00;
+    color: #fff;
+    margin: 20px 5px;
+    padding: 10px;
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+
+  #stat_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  #charts_container{
+    width: 100%; 
+    max-width: 960px;
+    text-align: center;
+  }
+
+  table {
+    width: 100%;
+    max-width: 960px;
+    margin: 40px auto;
+    text-align: center;
+  }
+  
+  th {
+    border: 1px solid #666;
+    padding: 5px 10px;
+  }
+
+  td {
+    border: 1px solid #666;
+  }
+
+  #table_metrics {
+    display: none;
+    width: 100vw;
+  }
+
+  #singleAPI {
+    margin: 10px;
+  }
