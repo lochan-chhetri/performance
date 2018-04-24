@@ -12,9 +12,12 @@
     <h1>Performance Test</h1>
     
     <form id="searchForm">
-        <!-- <input type="checkbox" name="singleAPI" id="singleAPI" /> -->
+        <div id="xhrOptions">
+            <input type="radio" name="xhrOptions" id="radionOptionCurrent" value="Current" checked="checked" /><label for="radionOptionCurrent">Current Endpoint</label>
+            <input type="radio" name="xhrOptions" id="radioOptionZycada" value="Zycada" /><label for="radioOptionZycada">Zycada Endpoint</label>
+        </div>
         <input type="text" id="searchText" name="keyword" autofocus/>
-        <button name="searchButton">Search</button>
+        <button name="searchButton" id="searchButton">Search</button>
     </form>
 
     <div id="image_container" class="imageContainer">

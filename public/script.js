@@ -1,120 +1,76 @@
 const akImgPrefix = "https://slimages.macysassets.com";
 const zyImgPrefix   = "https://slimages-macysassets-com.zycadize.com";
 
-// const akApiUrlPrefix  = "/macys/api/discover/v1/search?keyword=";
-const akApiUrlPrefix  = "https://m-macys-com.zycadize.com/api/discover/v1/search?keyword=";
-// const zyApiUrlPrefix  = "/macys/api/discover/v1/search?keyword=";
-let zyApiUrlPrefix  = "https://m-macys-com.zycadize.com/api/discover/v1/search?keyword=";
+const akUrlPrefix  = "/macys/api/discover/v1/search?keyword=";
+const xhrUrlSuffix  = "&size=small&requestFacets=true&requestProducts=true&pathname=/shop/search&_application=MEW&_deviceType=PHONE&_navigationType=SEARCH&assortment=SITE&_regionCode=US&_customerState=GUEST";
+const zyUrlPrefix =  "https://m-macys-com.zycadize.com/api/discover/v1/search?keyword="
 
-const apiUrlSuffix  = "&size=small&requestFacets=true&requestProducts=true&pathname=/shop/search&_application=MEW&_deviceType=PHONE&_navigationType=SEARCH&assortment=SITE&_regionCode=US&_customerState=GUEST";
-let UUID;
 let akDataArr = [];
 let zyDataArr = [];
+
 let chart_duration;
 
-const uuidv4 = () => {
-  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
-};
-
-const loadPhantomAsset = (uuid) => {
-    UUID = uuid;
-    let img = new Image();
-    zyUuid = uuid;
-    console.log('OnLoad Zy UUID is ', uuid);
-    var hash = 'zycadize';
-    
-    var ghost_url = zyImgPrefix + "/" + hash + "?X-Zy-UUID=" + uuid;
-    
-    var container = document.getElementById("bImage");
-
-    img.onload = function () { container.appendChild(img); };
-    img.src = ghost_url;
-};
+const akContainer = document.getElementById('akamai');
+const zyContainer = document.getElementById('zycada');
 
 const requestXHR = vendor => {
     const keyword = document.getElementById('searchText').value;
-    let url, imagePrefix, headers = new Headers();
+    let xhrUrlPrefix;
+    let url;
 
-    switch (vendor) {
-        case 'akamai':
-            url = akApiUrlPrefix + keyword + apiUrlSuffix;
-            imagePrefix = akImgPrefix;
-            break;
-        case 'zycada':
-            url = zyApiUrlPrefix + keyword + apiUrlSuffix + '&X-Zy-UUID=' + UUID;
-            imagePrefix = zyImgPrefix;
-            headers.append('X-Zy-UUID', UUID);
-        break;
-    
-        default:
-            break;
+    if(vendor === 'akamai'){
+        url = akUrlPrefix + keyword + xhrUrlSuffix;
+    } else if(vendor === 'zycada') {
+        url = zyUrlPrefix + keyword + xhrUrlSuffix + '&X-Zy-UUID=' + zyUuid;
     }
+        
 
     fetch(url, {
-        method: 'GET',
-        headers: headers
+        method: 'GET'
     })
         .then( response => {
+            document.getElementById('searchButton').innerHTML = 'Search';
             return response.text();
         })
         .then( text => {
             const data = JSON.parse(text);
-            if(vendor === 'akamai') {
-                setakDataArr(data, imagePrefix);
-            } else if (vendor === 'zycada') {
-                setzyDataArr(data, imagePrefix);
-            }
-            render(vendor);
+            populateVendorArray(data);
+            render();
         })
         .catch( error => {
             console.log('Request failed', error);
         });
 };
 
-const setakDataArr = (data, imagePrefix) => {
-    const collection = data.simpleCanvas[0].sortableGrid.collection;
+const populateVendorArray = data => {
     
-    reducedCollectionSet = collection.slice(0, (collection.length/2) );
+    const collection = data.simpleCanvas[0].sortableGrid.collection;
+    const reducedCollectionSet = collection.slice(0, (collection.length/2) );
 
-    reducedCollectionSet.forEach( (item, index) => {
+    reducedCollectionSet.forEach( item => {
         const file = item.product.imagery.primaryImage.filePath;
-        const path = imagePrefix + '/is/image/MCY/products/' + file;
-        akDataArr.push({name: path});
+        
+        const akPath = akImgPrefix + '/is/image/MCY/products/' + file;
+        const zyPath = zyImgPrefix + '/is/image/MCY/products/' + file;
+
+        akDataArr.push({name: akPath, vendor: 'akamai'});
+        zyDataArr.push({name: zyPath, vendor: 'zycada'});
     });
 };
 
-const setzyDataArr = (data, imagePrefix) => {
-    const collection = data.simpleCanvas[0].sortableGrid.collection;
+const render = () => {
     
-    reducedCollectionSet = collection.slice(0, (collection.length/2) );
+    const unifiedArr = akDataArr.concat(zyDataArr);
 
-    reducedCollectionSet.forEach( (item, index) => {
-        const file = item.product.imagery.primaryImage.filePath;
-        const path = imagePrefix + '/is/image/MCY/products/' + file;
-        zyDataArr.push({name: path});
-    });
-};
-
-const render = vendor => {
-    const container = document.getElementById(vendor);
-    
-    // clear DOM container
-    while (container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
-    
-    let vendorData;
-    if (vendor === 'zycada') {
-        vendorData = zyDataArr;
-    } else if (vendor === 'akamai') {
-       vendorData = akDataArr;
-    }
-
-    vendorData.forEach( data => {
+    unifiedArr.forEach( data => {
         const image = new Image();
 
         image.onload = function () {
-            container.appendChild(image);
+            if(data.vendor === 'akamai') {
+                akContainer.appendChild(image);
+            } else if (data.vendor === 'zycada') {
+                zyContainer.appendChild(image);
+            }
         };
         
         image.src = data.name; 
@@ -300,29 +256,56 @@ const draw = () => {
     });
 };
 
-window.onload = () => {
-    loadPhantomAsset(uuidv4());
-};
-
 document.getElementById('searchForm').addEventListener('submit', evt => {
     evt.preventDefault();
 
-    // if(document.getElementById('singleAPI').checked) {
-    //     zyApiUrlPrefix = akApiUrlPrefix;
-    // }
-    
+    document.getElementById('searchButton').innerHTML = 'loading';
+
+    // clear stale data
     akDataArr = []; // to make sure array is empty
     zyDataArr = [];
     window.performance.clearResourceTimings(); // clear existing numbers
     populateTable(); // empty call clears the table
     document.getElementById('table_metrics').style.display = 'none'; // hide table
 
+    // clear DOM container
+    while (akContainer.firstChild) {
+        akContainer.removeChild(akContainer.firstChild);
+    }
+    while (zyContainer.firstChild) {
+        zyContainer.removeChild(zyContainer.firstChild);
+    }
+
+
     if( chart_duration ) {
         chart_duration.destroy();
     }
     
-    requestXHR('akamai');
-    requestXHR('zycada');
+    if(document.getElementById('radionOptionCurrent').checked) {
+        requestXHR('akamai');
+    } else if(document.getElementById('radioOptionZycada').checked) {
+        loadPhantomAsset(uuidv4());
+        requestXHR('zycada');
+    }
+    
 });
+
+const uuidv4 = () => {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
+};
+
+const loadPhantomAsset = (uuid) => {
+    let img = new Image();
+    zyUuid = uuid;
+    console.log('OnLoad Zy UUID is ', uuid);
+    var hash = 'zycadize';
+    
+    var ghost_url = zyImgPrefix + "/" + hash + "?X-Zy-UUID=" + uuid;
+    
+    var container = document.getElementById("bImage");
+
+    img.onload = function () { container.appendChild(img); };
+    img.src = ghost_url;
+};
 
 document.getElementById('metrics').addEventListener('click', getMetrics);

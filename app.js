@@ -6,7 +6,12 @@ const port = process.env.PORT || 3000;
 
 app.get('/macys/api/discover/v1/search', (req, res) => {
     request({
-        url: 'http://m.macys.com/api/discover/v1/search?keyword=' + req.query.keyword + '&size=small&requestFacets=true&requestProducts=true&pathname=/shop/search&_application=MEW&_deviceType=PHONE&_navigationType=SEARCH&assortment=SITE&_regionCode=US&_customerState=GUEST'
+        url: 'http://api.macys.com/discover/v1/search?keyword=' + req.query.keyword + '&size=small&requestFacets=true&requestProducts=true&pathname=/shop/search&_application=MEW&_deviceType=PHONE&_navigationType=SEARCH&assortment=SITE&_regionCode=US&_customerState=GUEST',
+        headers: {
+            'Accept': 'application/json',
+            'x-macys-webservice-client-id': 'wzuuhtwrrpegszaehcu6ey2n',
+            'Content-Type': 'application/json',
+        }
     },
     function (error, response, body) {
         if(!error && response.statusCode === 200) {

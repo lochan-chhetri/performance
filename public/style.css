@@ -13,16 +13,18 @@ h1 {
   border: 1px solid #666;
   font-size: 14px;
   color: #333;
-  width: 200px;
+  width: 140px;
 }
 
 #searchForm button {
   padding: 10px;
-  background: #EEE;
+  background: #C00;
+  color: #fff;
   font-weight: bold;
   margin: 0 5px;
   font-size: 14px;
   width: 100px;
+  border: 1px solid #C00;
 }
 
 #image_container {
@@ -69,6 +71,7 @@ h1 {
     font-size: 18px;
     font-weight: bold;
     background-color: #C00;
+    border: 1px solid #C00;
     color: #fff;
     margin: 20px 5px;
     padding: 10px;
@@ -111,4 +114,12 @@ h1 {
 
   #singleAPI {
     margin: 10px;
+  }
+
+  #xhrOptions {
+    margin: 0 0 20px 0;
+  }
+
+  #xhrOptions input {
+    margin: 0 10px;
   }
