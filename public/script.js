@@ -46,7 +46,7 @@ const requestXHR = vendor => {
 const populateVendorArray = data => {
     
     const collection = data.simpleCanvas[0].sortableGrid.collection;
-    const reducedCollectionSet = collection.slice(0, (collection.length/2) );
+    const reducedCollectionSet = collection.slice(0, (collection.length) );
 
     reducedCollectionSet.forEach( item => {
         const file = item.product.imagery.primaryImage.filePath;
@@ -239,16 +239,29 @@ const draw = () => {
         options: {
             tooltips: {
                 callbacks: {
+                    title: function(tooltipItem, data) {
+                        var label = data.datasets[tooltipItem[0].datasetIndex].label || '';
+                        var image;
+
+                        if(label === 'Akamai') {
+                            image = akDataArr[tooltipItem[0].index].name;
+                        }
+
+                        if(label === 'Zycada') {
+                            image = zyDataArr[tooltipItem[0].index].name;
+                        }
+                        return image;
+                    },
                     label: function(tooltipItem, data) {
                         var label = data.datasets[tooltipItem.datasetIndex].label || '';
                         
                         var imgIndex = parseInt(tooltipItem.xLabel);
                         
                         if (label) {
-                            label += ': ';
+                            label += ' duration: ';
                         }
             
-                        label += tooltipItem.yLabel;           
+                        label += tooltipItem.yLabel + ' ms';           
                         label += '\n';
                             
                         return label;
