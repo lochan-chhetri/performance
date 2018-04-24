@@ -16,6 +16,10 @@ app.get('/macys/api/discover/v1/search', (req, res) => {
         }
     },
     function (error, response, body) {
+            console.log('******** response ********')
+            console.log(response);
+            console.log('******** END response ********')
+
         if(!error && response.statusCode === 200) {
             console.log('******** response body ********')
             console.log(body);
