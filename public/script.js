@@ -225,12 +225,14 @@ const draw = () => {
              {
                  data: akDurations,
                  label: 'Akamai',
-                 borderColor: '#39937e'
+                 borderColor: '#39937e',
+                 fill: false
              },
              {
                  data: zyDurations,
                  label: 'Zycada',
-                 borderColor: '#d34554'
+                 borderColor: '#d34554',
+                 fill: false
              }
          ]
         },
