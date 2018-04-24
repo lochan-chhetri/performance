@@ -29,7 +29,8 @@ const requestXHR = vendor => {
         method: 'GET'
     })
         .then( response => {
-            document.getElementById('searchButton').innerHTML = 'Search';
+            document.getElementById('searchButton').innerHTML = 'SEARCH';
+            document.getElementById('searchButton').disabled = false;
             return response.text();
         })
         .then( text => {
@@ -259,7 +260,8 @@ const draw = () => {
 document.getElementById('searchForm').addEventListener('submit', evt => {
     evt.preventDefault();
 
-    document.getElementById('searchButton').innerHTML = 'loading';
+    document.getElementById('searchButton').innerHTML = 'LOADING';
+    document.getElementById('searchButton').disabled = true;
 
     // clear stale data
     akDataArr = []; // to make sure array is empty

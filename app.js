@@ -1,6 +1,6 @@
 const express = require('express');
 const request = require('request');
-require('request').debug = true
+// require('request').debug = true
 const app = express();
 
 
@@ -16,14 +16,7 @@ app.get('/macys/api/discover/v1/search', (req, res) => {
         }
     },
     function (error, response, body) {
-            console.log('******** response ********')
-            console.log(response);
-            console.log('******** END response ********')
-
         if(!error && response.statusCode === 200) {
-            console.log('******** response body ********')
-            console.log(body);
-            console.log('******** END response body ********')
             res.json(JSON.parse(body));
         } else {
             console.log(error);
