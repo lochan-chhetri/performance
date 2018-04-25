@@ -27,16 +27,45 @@ h1 {
   border: 1px solid #C00;
 }
 
-#searchForm button:disabled {
+#searchForm button:disabled, #metrics:disabled {
   background-color: #CCC;
   border: 1px solid #CCC;
 }
 
-#image_container {
+#image_container{
     margin: 5px;
     padding: 5px;   
     display: flex; 
     justify-content: center;
+}
+
+#image_container_title{
+  margin: 5px 5px 0 5px;
+  padding: 5px;   
+  display: flex; 
+  justify-content: center;
+}
+
+#image_container_title div{
+  margin: 5px 5px 0 5px;
+  display: inline-block;
+  width: 50vw;
+}
+
+#image_container_title div#akamai_title {
+  color: #39937e;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+#image_container_title div#zycada_title {
+  color: #d34554;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+#image_container_title div h2 {
+  margin: 0;
 }
 
 .imageContainer img {

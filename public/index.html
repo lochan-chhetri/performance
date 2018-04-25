@@ -13,20 +13,24 @@
     
     <form id="searchForm">
         <div id="xhrOptions">
-            <input type="radio" name="xhrOptions" id="radionOptionCurrent" value="Current" checked="checked" /><label for="radionOptionCurrent">Current Endpoint</label>
-            <input type="radio" name="xhrOptions" id="radioOptionZycada" value="Zycada" /><label for="radioOptionZycada">Zycada Endpoint</label>
+            <input type="radio" name="xhrOptions" id="radionOptionCurrent" value="Current" checked="checked" /><label for="radionOptionCurrent">Akamai API</label>
+            <input type="radio" name="xhrOptions" id="radioOptionZycada" value="Zycada" /><label for="radioOptionZycada">Zycada API</label>
         </div>
         <input type="text" id="searchText" name="keyword" autofocus/>
-        <button name="searchButton" id="searchButton">SEARCH</button>
+        <button name="searchButton" id="searchButton" disabled>SEARCH</button>
     </form>
 
+    <div id="image_container_title">
+        <div id="akamai_title"><h2>Akamai</h2></div>
+        <div id="zycada_title"><h2>Zycada</h2></div>
+    </div>
     <div id="image_container" class="imageContainer">
         <div id="akamai" class="vendor_container"></div>
         <div id="zycada" class="vendor_container"></div>
     </div>
 
     <div id="button_container">
-        <button id="metrics">Metrics</button>
+        <button id="metrics" disabled>Metrics</button>
     </div>
 
     <div id="stat_wrapper">

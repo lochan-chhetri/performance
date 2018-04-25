@@ -46,9 +46,9 @@ const requestXHR = vendor => {
 const populateVendorArray = data => {
     
     const collection = data.simpleCanvas[0].sortableGrid.collection;
-    const reducedCollectionSet = collection.slice(0, (collection.length) );
+    // const reducedCollectionSet = collection.slice(0, (collection.length) );
 
-    reducedCollectionSet.forEach( item => {
+    collection.forEach( item => {
         const file = item.product.imagery.primaryImage.filePath;
         
         const akPath = akImgPrefix + '/is/image/MCY/products/' + file;
@@ -63,7 +63,7 @@ const render = () => {
     
     const unifiedArr = akDataArr.concat(zyDataArr);
 
-    unifiedArr.forEach( data => {
+    unifiedArr.forEach( (data, index) => {
         const image = new Image();
 
         image.onload = function () {
@@ -72,9 +72,13 @@ const render = () => {
             } else if (data.vendor === 'zycada') {
                 zyContainer.appendChild(image);
             }
+            if( index == unifiedArr.length - 1 ) {
+            document.getElementById('metrics').disabled = false;
+        }
         };
         
-        image.src = data.name; 
+        image.src = data.name;
+
     });
 };
 
@@ -277,7 +281,7 @@ document.getElementById('searchForm').addEventListener('submit', evt => {
 
     document.getElementById('searchButton').innerHTML = 'LOADING';
     document.getElementById('searchButton').disabled = true;
-
+    
     // clear stale data
     akDataArr = []; // to make sure array is empty
     zyDataArr = [];
@@ -324,5 +328,9 @@ const loadPhantomAsset = (uuid) => {
     img.onload = function () { container.appendChild(img); };
     img.src = ghost_url;
 };
+
+window.onload = () => {
+    document.getElementById('searchButton').disabled = false;
+}
 
 document.getElementById('metrics').addEventListener('click', getMetrics);
