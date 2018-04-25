@@ -169,13 +169,24 @@ const populateTable = (totalImages, min, max, mean, p25, p50, p75, p95) => {
         const longest = (max) ? (max[0] > max[1] ? max[0] : max[1]) : 0;
 
         if(akDataArr.length) {
-            console.log('akamai', akDataArr);
+            console.log('Sorted Akamai');
+            console.log(akDataArr);
         }
 
         if(zyDataArr.length) {
-        console.log('zycada', zyDataArr);
+            console.log('Sorted Zycada');
+            console.log('zycada', zyDataArr);
         }
         
+        if(akUnsortedDataArr.length) {
+            console.log('Unsorted Akamai');
+            console.log(akUnsortedDataArr);
+        }
+
+        if(zyUnsortedDataArr.length) {
+            console.log('Unsorted Zycada');
+            console.log(zyUnsortedDataArr);
+        }
 
                 
         document.getElementById('total_images').children[1].innerHTML = totalImages ? totalImages[0] : '';
