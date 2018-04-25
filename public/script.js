@@ -8,6 +8,8 @@ const zyUrlPrefix =  "https://m-macys-com.zycadize.com/api/discover/v1/search?ke
 let akDataArr = [];
 let zyDataArr = [];
 
+let lastKeyword;
+
 let chart_duration;
 
 const akContainer = document.getElementById('akamai');
@@ -29,8 +31,13 @@ const requestXHR = vendor => {
         method: 'GET'
     })
         .then( response => {
-            document.getElementById('searchButton').innerHTML = 'SEARCH';
-            document.getElementById('searchButton').disabled = false;
+            
+            window.setTimeout(() => {
+                document.getElementById('searchButton').innerHTML = 'SEARCH';
+                document.getElementById('searchButton').disabled = false;    
+            }, 500);
+            
+            
             return response.text();
         })
         .then( text => {
@@ -73,8 +80,10 @@ const render = () => {
                 zyContainer.appendChild(image);
             }
             if( index == unifiedArr.length - 1 ) {
-            document.getElementById('metrics').disabled = false;
-        }
+                window.setTimeout(() => {
+                    document.getElementById('metrics').disabled = false;    
+                }, 500);
+            }
         };
         
         image.src = data.name;
@@ -245,16 +254,18 @@ const draw = () => {
                 callbacks: {
                     title: function(tooltipItem, data) {
                         var label = data.datasets[tooltipItem[0].datasetIndex].label || '';
-                        var image;
+                        var fullImagePath, imageName;
 
                         if(label === 'Akamai') {
-                            image = akDataArr[tooltipItem[0].index].name;
+                            fullImagePath = akDataArr[tooltipItem[0].index].name.split('/');
+                            imageName = fullImagePath[fullImagePath.length-1]
                         }
 
                         if(label === 'Zycada') {
-                            image = zyDataArr[tooltipItem[0].index].name;
+                            fullImagePath = zyDataArr[tooltipItem[0].index].name.split('/');
+                            imageName = fullImagePath[fullImagePath.length-1]
                         }
-                        return image;
+                        return imageName;
                     },
                     label: function(tooltipItem, data) {
                         var label = data.datasets[tooltipItem.datasetIndex].label || '';
@@ -262,7 +273,7 @@ const draw = () => {
                         var imgIndex = parseInt(tooltipItem.xLabel);
                         
                         if (label) {
-                            label += ' duration: ';
+                            label = 'Duration: ';
                         }
             
                         label += tooltipItem.yLabel + ' ms';           
@@ -281,13 +292,26 @@ document.getElementById('searchForm').addEventListener('submit', evt => {
 
     document.getElementById('searchButton').innerHTML = 'LOADING';
     document.getElementById('searchButton').disabled = true;
+    document.getElementById('metrics').disabled = true;    
+    document.getElementById('warning').classList.remove('show');
     
     // clear stale data
     akDataArr = []; // to make sure array is empty
     zyDataArr = [];
-    window.performance.clearResourceTimings(); // clear existing numbers
+    
     populateTable(); // empty call clears the table
     document.getElementById('table_metrics').style.display = 'none'; // hide table
+
+    if( lastKeyword !== document.getElementById('searchText').value) {
+        window.performance.clearResourceTimings(); // clear existing numbers
+        // document.getElementById('warning').style.display = 'none'
+        document.getElementById('warning').classList.remove('show');
+    } else {
+    //    document.getElementById('warning').style.display = 'block'
+       document.getElementById('warning').classList.add('show');
+    }
+    
+    lastKeyword = document.getElementById('searchText').value;
 
     // clear DOM container
     while (akContainer.firstChild) {

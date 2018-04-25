@@ -4,7 +4,7 @@ h1 {
 }
 #searchForm {
   padding: 10px 0;
-  margin: 10px 5px;
+  margin: 10px 5px 0;
   text-align: center;
 }
 
@@ -156,4 +156,21 @@ h1 {
 
   #xhrOptions input {
     margin: 0 10px;
+  }
+
+  #warning {
+    text-align: center;
+    border: 1px solid;
+    padding: 10px;
+    background-color: yellow;
+    color: black;
+    font-weight: bold;
+    font-family: sans-serif;
+    display: none;
+    width: 250px;
+    margin: 0 auto;
+  }
+
+  #warning.show {
+    display: block;
   }
