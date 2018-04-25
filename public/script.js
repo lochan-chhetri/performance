@@ -8,6 +8,9 @@ const zyUrlPrefix =  "https://m-macys-com.zycadize.com/api/discover/v1/search?ke
 let akDataArr = [];
 let zyDataArr = [];
 
+let zyUnsortedDataArr = [];
+let akUnsortedDataArr = [];
+
 let lastKeyword;
 
 let chart_duration;
@@ -94,6 +97,8 @@ const render = () => {
 const getMetrics = () => {
     const performance = window.performance;
     
+    document.getElementById('chartOptions').style.display = 'block';
+
     const setEntries = item => {
         if(!performance.getEntriesByName(item.name)[0]) {
             throw new Error('Entry not found');
@@ -114,6 +119,9 @@ const getMetrics = () => {
         setEntries(item);
     });
 
+    zyUnsortedDataArr = zyDataArr.slice();
+    akUnsortedDataArr = akDataArr.slice();
+
     
     zyDataArr.sort(function (a, b) {
         return a.duration - b.duration;
@@ -125,7 +133,7 @@ const getMetrics = () => {
     
 
     setStats();
-    draw();
+    draw(zyDataArr, akDataArr);
 };
 
 const setStats = () => {
@@ -213,7 +221,7 @@ const getImageThreshold = (vendor, threshold) => {
        return (percentage * 100).toFixed(2);
 };
 
-const draw = () => {
+const draw = (zyDataArr_scoped, akDataArr_scoped) => {
 
     const ctx = document.getElementById("chart_duration");
     document.getElementById('table_metrics').style.display = 'block'; 
@@ -221,13 +229,13 @@ const draw = () => {
     let imageCountArr = [], count = 1;
 
 
-    while(count <= akDataArr.length ) {
+    while(count <= akDataArr_scoped.length ) {
         imageCountArr.push(count);
         count++;
     }
 
-    const akDurations = akDataArr.map( item => item.duration);
-    const zyDurations = zyDataArr.map( item => item.duration);
+    const akDurations = akDataArr_scoped.map( item => item.duration);
+    const zyDurations = zyDataArr_scoped.map( item => item.duration);
     
     chart_duration = new Chart(ctx, {
         type: 'line',
@@ -257,12 +265,12 @@ const draw = () => {
                         var fullImagePath, imageName;
 
                         if(label === 'Akamai') {
-                            fullImagePath = akDataArr[tooltipItem[0].index].name.split('/');
+                            fullImagePath = akDataArr_scoped[tooltipItem[0].index].name.split('/');
                             imageName = fullImagePath[fullImagePath.length-1]
                         }
 
                         if(label === 'Zycada') {
-                            fullImagePath = zyDataArr[tooltipItem[0].index].name.split('/');
+                            fullImagePath = zyDataArr_scoped[tooltipItem[0].index].name.split('/');
                             imageName = fullImagePath[fullImagePath.length-1]
                         }
                         return imageName;
@@ -292,7 +300,8 @@ document.getElementById('searchForm').addEventListener('submit', evt => {
 
     document.getElementById('searchButton').innerHTML = 'LOADING';
     document.getElementById('searchButton').disabled = true;
-    document.getElementById('metrics').disabled = true;    
+    document.getElementById('metrics').disabled = true;
+    document.getElementById('chartOptions').style.display = 'none';
     document.getElementById('warning').classList.remove('show');
     
     // clear stale data
@@ -358,3 +367,19 @@ window.onload = () => {
 }
 
 document.getElementById('metrics').addEventListener('click', getMetrics);
+
+document.getElementById('radioOptionUnsorted').addEventListener('click', () => {
+    if( chart_duration ) {
+        chart_duration.destroy();
+    }
+
+    draw(zyUnsortedDataArr, akUnsortedDataArr);
+});
+
+document.getElementById('radionOptionSorted').addEventListener('click', () => {
+    if( chart_duration ) {
+        chart_duration.destroy();
+    }
+
+    draw(zyDataArr, akDataArr);
+});

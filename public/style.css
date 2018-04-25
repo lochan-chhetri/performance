@@ -150,11 +150,15 @@ h1 {
     margin: 10px;
   }
 
-  #xhrOptions {
+  #chartOptions {
+    display: none;
+  }
+
+  #xhrOptions, #chartOptions {
     margin: 0 0 20px 0;
   }
 
-  #xhrOptions input {
+  #xhrOptions input, #chartOptions input {
     margin: 0 10px;
   }
 
