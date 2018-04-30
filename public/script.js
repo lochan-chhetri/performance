@@ -18,8 +18,8 @@ let chart_duration;
 const akContainer = document.getElementById('akamai');
 const zyContainer = document.getElementById('zycada');
 
-const requestXHR = vendor => {
-    const keyword = document.getElementById('searchText').value;
+const requestXHR = (keyword, vendor) => {
+
     let xhrUrlPrefix;
     let url;
 
@@ -346,11 +346,13 @@ document.getElementById('searchForm').addEventListener('submit', evt => {
         chart_duration.destroy();
     }
     
+    const keyword = document.getElementById('searchText').value;
+    
     if(document.getElementById('radionOptionCurrent').checked) {
-        requestXHR('akamai');
+        requestXHR(keyword, 'akamai');
     } else if(document.getElementById('radioOptionZycada').checked) {
         loadPhantomAsset(uuidv4());
-        requestXHR('zycada');
+        requestXHR(keyword, 'zycada');
     }
     
 });
@@ -375,7 +377,39 @@ const loadPhantomAsset = (uuid) => {
 
 window.onload = () => {
     document.getElementById('searchButton').disabled = false;
+    const params = getParams();
+
+    if(params.keyword) {
+
+        if(params.server === 'akamai' || !params.server) {
+            requestXHR(params.keyword, 'akamai');
+        }
+
+        if(params.server === 'zycada') {
+            loadPhantomAsset(uuidv4());
+            requestXHR(params.keyword, 'zycada');
+        }
+
+    }
 }
+
+const getParams = () => {
+    let search = window.location.search;
+    let params = {};
+
+    search = search.substr(1);
+    let split = search.split('&');
+
+    split.forEach( param => {
+        let p = param.split('=');
+        params[p[0]] = p[1];
+    });
+
+    return {
+      keyword: params.keyword,
+      server: params.server
+    };
+};
 
 document.getElementById('metrics').addEventListener('click', getMetrics);
 
