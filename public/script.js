@@ -329,6 +329,7 @@ document.getElementById('searchForm').addEventListener('submit', evt => {
     } else {
     //    document.getElementById('warning').style.display = 'block'
        document.getElementById('warning').classList.add('show');
+       window.setTimeout( function() { window.location.reload(true); }, 1000 );
     }
     
     lastKeyword = document.getElementById('searchText').value;
