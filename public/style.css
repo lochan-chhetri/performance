@@ -1,6 +1,7 @@
 h1 {
   text-align: center;
   text-transform: capitalize;
+  font-size: 25px;
 }
 #searchForm {
   padding: 10px 0;
