@@ -1,9 +1,9 @@
 const akImgPrefix = "https://slimages.macysassets.com";
-const zyImgPrefix   = "https://slimages-macysassets-com.zycadize.com";
+const zyImgPrefix   = "https://zycada-slimages.macysassets.com";
 
 const akUrlPrefix  = "/macys/api/discover/v1/search?keyword=";
 const xhrUrlSuffix  = "&size=small&requestFacets=true&requestProducts=true&pathname=/shop/search&_application=MEW&_deviceType=PHONE&_navigationType=SEARCH&assortment=SITE&_regionCode=US&_customerState=GUEST";
-const zyUrlPrefix =  "https://m-macys-com.zycadize.com/api/discover/v1/search?keyword="
+const zyUrlPrefix =  "https://zycada-m.macys.com/api/discover/v1/search?keyword="
 
 let akDataArr = [];
 let zyDataArr = [];
@@ -388,6 +388,7 @@ window.onload = () => {
 
         if(params.server === 'zycada') {
             loadPhantomAsset(uuidv4());
+            document.getElementById('radioOptionZycada').checked = true;
             requestXHR(params.keyword, 'zycada');
         }
 
