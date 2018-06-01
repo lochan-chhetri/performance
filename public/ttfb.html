@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Asset Performance</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+    <h1>Performance Comparison</h1>
+
+    <form id="searchForm">
+        <div id="xhrOptions">
+            <input type="radio" name="xhrOptions" id="radionOptionCurrent" value="Current" checked="checked" /><label for="radionOptionCurrent">Akamai API</label>
+            <input type="radio" name="xhrOptions" id="radioOptionZycada" value="Zycada" /><label for="radioOptionZycada">Zycada API</label>
+        </div>
+        <input type="text" id="searchText" name="keyword" autofocus/>
+        <button name="searchButton" id="searchButton" disabled>SEARCH</button>
+    </form>
+    
+    <div id="warning">
+       Cached data, reloading page.
+    </div>
+
+    <div id="image_container_title">
+        <div id="akamai_title"><h2>Akamai</h2></div>
+        <div id="zycada_title"><h2>Zycada</h2></div>
+    </div>
+    <div id="image_container" class="imageContainer">
+        <div id="akamai" class="vendor_container"></div>
+        <div id="zycada" class="vendor_container"></div>
+    </div>
+
+    <div id="button_container">
+        <button id="metrics" disabled>Metrics</button>
+    </div>
+
+    <div id="stat_wrapper">
+        <div id="charts_container">
+            <div id="chartOptions">
+                <input type="radio" name="chartOptions" id="radionOptionSorted" value="Sorted" checked="checked" /><label for="radionOptionSorted">Sorted Chart</label>
+                <input type="radio" name="chartOptions" id="radioOptionUnsorted" value="Unsorted" /><label for="radioOptionUnsorted">Unsorted Chart</label>
+            </div>
+            <canvas id="chart_duration"></canvas>
+        </div>
+        
+        <div id="table_metrics">
+            <table>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Akamai</th>
+                    <th>Zycada</th>
+                </tr>
+                <tr id="total_images">
+                    <th>Total Images</th>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="min">
+                    <th>Min</th>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="max">
+                    <th>Max</th>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="mean">
+                    <th>Mean</th>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="p25">
+                    <th>P25</th>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="p50">
+                    <th>P50</th>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="p75">
+                    <th>P75</th>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+
+
+    </div>
+
+    <div id="bImage"></div>
+   <script src="Chart.bundle.min.js" type="text/javascript"></script>
+   <script src="ttfb.js" type="text/javascript"></script>
+</body>
+</html>
