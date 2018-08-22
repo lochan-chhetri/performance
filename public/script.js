@@ -2,8 +2,8 @@ const akImgPrefix = "https://slimages.macysassets.com";
 const zyImgPrefix   = "https://zycada-slimages.macysassets.com";
 
 const akUrlPrefix  = "/macys/api/discover/v1/search?keyword=";
-const xhrUrlSuffix  = "&size=small&requestFacets=true&requestProducts=true&pathname=/shop/search&_application=MEW&_deviceType=PHONE&_navigationType=SEARCH&assortment=SITE&_regionCode=US&_customerState=GUEST";
-const zyUrlPrefix =  "https://zycada-m.macys.com/api/discover/v1/search?keyword="
+const xhrUrlSuffix  = "&_application=SITE&_navigationType=SEARCH&_deviceType=PC&_shoppingMode=SITE&_regionCode=US&_customerState=GUEST";
+const zyUrlPrefix =  "/zycada/api/discover/v1/search?keyword=";
 
 let akDataArr = [];
 let zyDataArr = [];
@@ -31,7 +31,8 @@ const requestXHR = (keyword, vendor) => {
         
 
     fetch(url, {
-        method: 'GET'
+        method: 'GET',
+        
     })
         .then( response => {
             
@@ -55,17 +56,21 @@ const requestXHR = (keyword, vendor) => {
 
 const populateVendorArray = data => {
     
-    const collection = data.simpleCanvas[0].sortableGrid.collection;
+    // const collection = data.simpleCanvas[0].sortableGrid.collection;
+    const collection = data.canvas.rows[0].rowSortableGrid.zones[1].sortableGrid.collection;
     // const reducedCollectionSet = collection.slice(0, (collection.length) );
 
     collection.forEach( item => {
-        const file = item.product.imagery.primaryImage.filePath;
+        if(item.product) {
+            const file = item.product.imagery.primaryImage.filePath;
         
-        const akPath = akImgPrefix + '/is/image/MCY/products/' + file;
-        const zyPath = zyImgPrefix + '/is/image/MCY/products/' + file;
+            const akPath = akImgPrefix + '/is/image/MCY/products/' + file;
+            const zyPath = zyImgPrefix + '/is/image/MCY/products/' + file;
 
-        akDataArr.push({name: akPath, vendor: 'akamai'});
-        zyDataArr.push({name: zyPath, vendor: 'zycada'});
+            akDataArr.push({name: akPath, vendor: 'akamai'});
+            zyDataArr.push({name: zyPath, vendor: 'zycada'});
+        }
+        
     });
 };
 
