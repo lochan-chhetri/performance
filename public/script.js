@@ -65,7 +65,7 @@ const populateVendorArray = data => {
             const file = item.product.imagery.primaryImage.filePath;
         
             const akPath = akImgPrefix + '/is/image/MCY/products/' + file;
-            const zyPath = zyImgPrefix + '/is/image/MCY/products/' + file;
+            const zyPath = zyImgPrefix + '/is/image/MCY/products/' + file + '?$thumb$';
 
             akDataArr.push({name: akPath, vendor: 'akamai'});
             zyDataArr.push({name: zyPath, vendor: 'zycada'});
