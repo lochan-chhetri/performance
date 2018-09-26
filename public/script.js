@@ -64,7 +64,7 @@ const populateVendorArray = data => {
         if(item.product) {
             const file = item.product.imagery.primaryImage.filePath;
         
-            const akPath = akImgPrefix + '/is/image/MCY/products/' + file;
+            const akPath = akImgPrefix + '/is/image/MCY/products/' + file + '?$thumb$';
             const zyPath = zyImgPrefix + '/is/image/MCY/products/' + file + '?$thumb$';
 
             akDataArr.push({name: akPath, vendor: 'akamai'});
@@ -172,27 +172,6 @@ if(akLength === zyLength) {
 const populateTable = (totalImages, min, max, mean, p25, p50, p75, p95) => {
 
         const longest = (max) ? (max[0] > max[1] ? max[0] : max[1]) : 0;
-
-        if(akDataArr.length) {
-            console.log('Sorted Akamai');
-            console.log(akDataArr);
-        }
-
-        if(zyDataArr.length) {
-            console.log('Sorted Zycada');
-            console.log('zycada', zyDataArr);
-        }
-        
-        if(akUnsortedDataArr.length) {
-            console.log('Unsorted Akamai');
-            console.log(akUnsortedDataArr);
-        }
-
-        if(zyUnsortedDataArr.length) {
-            console.log('Unsorted Zycada');
-            console.log(zyUnsortedDataArr);
-        }
-
                 
         document.getElementById('total_images').children[1].innerHTML = totalImages ? totalImages[0] : '';
         document.getElementById('total_images').children[2].innerHTML = totalImages ? totalImages[1] : '';
@@ -370,7 +349,6 @@ const uuidv4 = () => {
 const loadPhantomAsset = (uuid) => {
     let img = new Image();
     zyUuid = uuid;
-    console.log('OnLoad Zy UUID is ', uuid);
     var hash = 'zycadize';
     
     var ghost_url = zyImgPrefix + "/" + hash + "?X-Zy-UUID=" + uuid;
