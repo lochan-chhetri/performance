@@ -45,7 +45,7 @@ app.get('/zycada/api/discover/v1/search', (req, res) => {
     //     }
     // });
     
-    sa.get('https://zycada-m.macys.com/xapi/discover/v1/page?pathname=/shop/featured/' + req.query.keyword + '&_application=SITE&_navigationType=SEARCH&_deviceType=PC&_shoppingMode=SITE&_regionCode=US&_customerState=GUEST&X-Zy-UUID=' + req.query['X-Zy-UUID'])
+    sa.get('https://zycada-www.macys.com/xapi/discover/v1/page?pathname=/shop/featured/' + req.query.keyword + '&_application=SITE&_navigationType=SEARCH&_deviceType=PC&_shoppingMode=SITE&_regionCode=US&_customerState=GUEST&X-Zy-UUID=' + req.query['X-Zy-UUID'])
     .set('Accept', 'application/json')
     .end((err, response) => {
         if(!err && response.statusCode === 200) {
